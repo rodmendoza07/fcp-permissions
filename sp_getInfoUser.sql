@@ -17,7 +17,7 @@ BEGIN TRY
 		@msg varchar(500) = ''
 		, @cve_deptoW int = 0
 		, @app int = 0
-
+		 
 	BEGIN 
 		/* Validation of attempts */
 		IF (@tryn >= 3) 
