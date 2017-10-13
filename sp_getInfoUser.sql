@@ -17,7 +17,7 @@ BEGIN TRY
 		@msg varchar(500) = ''
 		, @cve_deptoW int = 0
 		, @app int = 0
-
+		 
 	BEGIN 
 		/* Validation of attempts */
 		IF (@tryn >= 3) 
@@ -78,6 +78,7 @@ BEGIN TRY
 		ORDER BY 2
 		
 		/* Menu */
+
 		SELECT a.tcmenu_id
 		, tcmenu_id_ap
 		, tcmenu_descrip
@@ -87,6 +88,7 @@ BEGIN TRY
 		, tcmenu_order
 		, tcmenu_class
 		, tcmenu_icon
+		INTO #tmpMenu
 		FROM CATALOGOS.dbo.tc_menus a WITH(NOLOCK)
 		WHERE tcmenu_id_ap = @app
 			AND tcmenu_estatus = 1 
@@ -94,19 +96,85 @@ BEGIN TRY
 						    FROM CATALOGOS.dbo.tc_acceso_perfiles per WITH(NOLOCK)
 						    WHERE per.pa_cve_depto IN (SELECT id_sucursal FROM #tmpUser)
 							 AND per.pa_cve_puesto IN (SELECT id_puesto FROM #tmpUser)
-							 AND per.pa_ap_id = @app
-						    UNION
-						    SELECT a.tcmenu_parent
-						    FROM CATALOGOS.dbo.tc_menus a WITH(NOLOCK)
-						    WHERE a.tcmenu_id IN ( SELECT per.pa_tcmenu_id
-											  FROM CATALOGOS.dbo.tc_acceso_perfiles per WITH(NOLOCK)
-											  WHERE per.pa_cve_depto IN (SELECT id_sucursal FROM #tmpUser)
-												AND per.pa_cve_puesto IN (SELECT id_puesto FROM #tmpUser)
-												AND per.pa_ap_id = @app
-											 )
-						)
+							 AND per.pa_ap_id = @app)
 		ORDER BY a.tcmenu_id, a.tcmenu_order 
-							
+
+		CREATE TABLE #menu1 (
+			tcmenu_id INT
+			, tcmenu_id_ap INT
+			, tcmenu_descrip VARCHAR(200)
+			, tcmenu_parent INT
+			, tcmenu_url VARCHAR(300)
+			, tcmenu_estatus INT
+			, tcmenu_order INT
+			, tcmenu_class VARCHAR(300)
+			, tcmenu_icon VARCHAR(300)
+		)
+
+		INSERT INTO #menu1 (
+			tcmenu_id
+			, tcmenu_id_ap
+			, tcmenu_descrip
+			, tcmenu_parent
+			, tcmenu_url
+			, tcmenu_estatus
+			, tcmenu_order
+			, tcmenu_class
+			, tcmenu_icon
+		)
+		SELECT
+			a.tcmenu_id
+			, a.tcmenu_id_ap
+			, a.tcmenu_descrip
+			, a.tcmenu_parent
+			, a.tcmenu_url
+			, a.tcmenu_estatus
+			, a.tcmenu_order
+			, a.tcmenu_class
+			, a.tcmenu_icon
+			--, c.tcmenu_id
+			--, d.tcmenu_id
+		FROM #tmpMenu a
+			INNER JOIN CATALOGOS.dbo.tc_menus b on (b.tcmenu_id = a.tcmenu_parent)
+			LEFT JOIN CATALOGOS.dbo.tc_menus c on (b.tcmenu_parent = c.tcmenu_id)
+		UNION
+		SELECT
+			b.tcmenu_id
+			, b.tcmenu_id_ap
+			, b.tcmenu_descrip
+			, b.tcmenu_parent
+			, b.tcmenu_url
+			, b.tcmenu_estatus
+			, b.tcmenu_order
+			, b.tcmenu_class
+			, b.tcmenu_icon
+			--, c.tcmenu_id
+			--, d.tcmenu_id
+		FROM #tmpMenu a
+			INNER JOIN CATALOGOS.dbo.tc_menus b on (b.tcmenu_id = a.tcmenu_parent)
+			LEFT JOIN CATALOGOS.dbo.tc_menus c on (b.tcmenu_parent = c.tcmenu_id)
+		UNION 
+		SELECT
+			c.tcmenu_id
+			, c.tcmenu_id_ap
+			, c.tcmenu_descrip
+			, c.tcmenu_parent
+			, c.tcmenu_url
+			, c.tcmenu_estatus
+			, c.tcmenu_order
+			, c.tcmenu_class
+			, c.tcmenu_icon
+			--, c.tcmenu_id
+			--, d.tcmenu_id
+		FROM #tmpMenu a
+			INNER JOIN CATALOGOS.dbo.tc_menus b on (b.tcmenu_id = a.tcmenu_parent)
+			LEFT JOIN CATALOGOS.dbo.tc_menus c on (b.tcmenu_parent = c.tcmenu_id)
+
+		DELETE FROM #menu1 WHERE tcmenu_id IS NULL
+
+		SELECT * FROM #menu1
+		DROP TABLE #tmpMenu
+		DROP TABLE #menu1					
 	END
 END TRY
 BEGIN CATCH
