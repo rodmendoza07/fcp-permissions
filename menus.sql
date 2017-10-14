@@ -87,10 +87,27 @@ FROM CATALOGOS.dbo.tc_menus
 --    VALUES(22, 'Requerimiento diario', 232, '#', 1, 2, '{ active: view.page == "/pld/dailyRequirement" }', '')
 
 --INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
---    VALUES(22, 'Autoridades', 232, '#', 1, 3, '{ active: view.page == "pld/authconfig" }', '')
+--    VALUES(22, 'Autoridades', 232, '#', 1, 3, '{ active: view.page == "/pld/authconfig" }', '')
 
 --INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
 --    VALUES(22, 'Consulta', 232, '#', 1, 4, '{ active: view.page == "/pld/inquiries" }', '')
 
 --INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
 --    VALUES(22, 'Quien es Quien', 232, '#', 1, 5, '{ active: view.page == "/pld/wisw" }', '')
+
+--update CATALOGOS.dbo.tc_menus SET
+--	tcmenu_url = '#/pld/dailyRequirement'
+--WHERE tcmenu_id = 233
+
+--update CATALOGOS.dbo.tc_menus SET
+--	tcmenu_url = '#/pld/authconfig'
+--	, tcmenu_class = '/pld/authconfig'
+--WHERE tcmenu_id = 234
+
+--update CATALOGOS.dbo.tc_menus SET
+--	tcmenu_url = '#/pld/inquiries'
+--WHERE tcmenu_id = 235
+
+--update CATALOGOS.dbo.tc_menus SET
+--	tcmenu_url = '#/pld/wisw'
+--WHERE tcmenu_id = 236
