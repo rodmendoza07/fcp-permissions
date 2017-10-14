@@ -30,7 +30,7 @@ BEGIN TRY
 		/* Get application */
 		SELECT @app = app.id_ap
 		FROM CATALOGOS.dbo.tc_aplicaciones app WITH(NOLOCK)
-		WHERE app.nombre_ap = 'GCP'
+		WHERE app.nombre_ap = 'SFP'
 
 		SELECT 
 			enc.peusr_passw_encrypt_lock AS [on_lock]

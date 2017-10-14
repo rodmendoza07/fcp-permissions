@@ -71,3 +71,26 @@ FROM CATALOGOS.dbo.tc_menus
 --	tcmenu_class = '{active:view.page == "/brokenessManagement/audit" || view.page == "/brokenessManagement/responsable/" + view.urlEmployee || view.page == "/brokenessManagement/humanTalent" || view.page == "/brokenessManagement/finance" || view.page == "/brokenessManagement/brokenessPayment"}'
 --where tcmenu_id = 271
 --	/*or tcmenu_id = 276*/
+
+--UPDATE CATALOGOS.dbo.tc_menus SET
+--	tcmenu_descrip = 'P. Lavado de dinero'
+--where tcmenu_id = 232
+
+--UPDATE CATALOGOS.dbo.tc_menus SET
+--	tcmenu_order = 5
+--where tcmenu_id = 236
+
+-- INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
+--    VALUES(22, 'P. Lavado de dinero', 0, '#', 1, 1, '{ active: view.page == "/pld/dailyRequirement" || view.page == "/pld/authconfig" || view.page == "/pld/inquiries" || view.page == "/pld/wisw" }', 'fa fa-shield')
+
+--INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
+--    VALUES(22, 'Requerimiento diario', 232, '#', 1, 2, '{ active: view.page == "/pld/dailyRequirement" }', '')
+
+--INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
+--    VALUES(22, 'Autoridades', 232, '#', 1, 3, '{ active: view.page == "pld/authconfig" }', '')
+
+--INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
+--    VALUES(22, 'Consulta', 232, '#', 1, 4, '{ active: view.page == "/pld/inquiries" }', '')
+
+--INSERT INTO CATALOGOS.dbo.tc_menus(tcmenu_id_ap, tcmenu_descrip, tcmenu_parent, tcmenu_url, tcmenu_estatus, tcmenu_order, tcmenu_class, tcmenu_icon)
+--    VALUES(22, 'Quien es Quien', 232, '#', 1, 5, '{ active: view.page == "/pld/wisw" }', '')
